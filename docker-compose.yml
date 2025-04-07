@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  prometheus-service-demo-0:
+    image: julius/prometheus-demo-service:latest
+    ports:
+      - "10000:8080"
+
+  prometheus-service-demo-1:
+    image: julius/prometheus-demo-service:latest
+    ports:
+      - "20000:8080"
+
+  prometheus-service-demo-2:
+    image: julius/prometheus-demo-service:latest
+    ports:
+      - "30000:8080"
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - prometheus-service-demo-0
+      - prometheus-service-demo-1
+      - prometheus-service-demo-2
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+     - ./grafana-storage:/var/lib/grafana
+     - ./grafana/dashboards:/etc/grafana/dashboards
+     - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+     - prometheus
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+
