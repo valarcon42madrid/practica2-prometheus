@@ -1,66 +1,50 @@
 {
-  "id": null,
   "uid": "metricas-http",
-  "title": "M\u00e9tricas HTTP",
-  "timezone": "browser",
+  "title": "Métricas HTTP",
   "schemaVersion": 30,
   "version": 1,
   "refresh": "5s",
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-15m",
-    "to": "now"
-  },
+  "time": { "from": "now-15m", "to": "now" },
   "panels": [
     {
+      "id": 1,
       "type": "stat",
-      "title": "P90 Duraci\u00f3n HTTP (m\u00e9todo/ruta/status)",
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 12,
-        "h": 6
-      },
+      "title": "P90 Duración HTTP (método/ruta/status)",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 6 },
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "histogram_quantile(0.90, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, method, path, status))",
+          "expr": "histogram_quantile(0.90, sum(rate(demo_api_request_duration_seconds_bucket[5m])) by (le, method, path, status))",
           "refId": "A"
         }
       ]
     },
     {
+      "id": 2,
       "type": "stat",
-      "title": "P95 Duraci\u00f3n HTTP (m\u00e9todo/ruta)",
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 12,
-        "h": 6
-      },
+      "title": "P95 Duración HTTP (método/ruta)",
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 6 },
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, method, path))",
+          "expr": "histogram_quantile(0.95, sum(rate(demo_api_request_duration_seconds_bucket[5m])) by (le, method, path))",
           "refId": "A"
         }
       ]
     },
     {
+      "id": 3,
       "type": "stat",
-      "title": "Promedio duraci\u00f3n HTTP (m\u00e9todo/ruta)",
-      "gridPos": {
-        "x": 0,
-        "y": 6,
-        "w": 24,
-        "h": 6
-      },
+      "title": "Promedio duración HTTP (método/ruta)",
+      "gridPos": { "x": 0, "y": 6, "w": 24, "h": 6 },
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "sum(rate(http_request_duration_seconds_sum[5m])) by (method, path) / sum(rate(http_request_duration_seconds_count[5m])) by (method, path)",
+          "expr": "sum(rate(demo_api_request_duration_seconds_sum[5m])) by (method, path) / sum(rate(demo_api_request_duration_seconds_count[5m])) by (method, path)",
           "refId": "A"
         }
       ]
     }
   ]
 }
+
