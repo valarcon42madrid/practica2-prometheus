@@ -129,7 +129,6 @@ done
 Esto activa las métricas `demo_api_request_duration_seconds_*` necesarias para los dashboards.
 
 ---
+Notas:
 
-## 🧾 Licencia
-
-Este proyecto es parte de una práctica educativa. Libre de uso con fines formativos.
+Vea (a partir del 09/04/2025) una implementación con alarmas incluidas en https://github.com/valarcon42madrid/practica2-chetada.git
